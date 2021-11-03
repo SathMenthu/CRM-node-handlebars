@@ -21,9 +21,9 @@ app.engine(
 );
 app.set("view engine", ".hbs");
 app.use("/", homeRouter);
-app.use("/client", homeRouter);
+app.use("/client", clientRouter);
 app.get("/test", (req, res) => {
-  res.json(JSON.stringify(db.delete("0c26b2a2-0956-4fa3-97d3-1e4b8674acde")));
+  res.send(db.getOne("").name);
 });
 
 app.listen(3000, "localhost", () => {
