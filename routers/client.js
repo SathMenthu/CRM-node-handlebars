@@ -17,15 +17,36 @@ clientRouter
   })
 
   .post("/", (req, res) => {
-    res.send("Dodaj!");
-  })
+    const id = db.create(req.body);
 
-  .put("/:id", (req, res) => {
-    res.send("Zmodyfikuj!");
+    res.render("client/added", {
+      id,
+      name: req.body.name,
+    });
   })
 
   .delete("/:id", (req, res) => {
-    res.send("Usuń!");
+    db.delete(req.params.id);
+    res.render("client/deleted");
+  })
+
+  .get("/form/add", (req, res) => {
+    res.render("client/forms/add");
+  })
+
+  .get("/form/edit/:id", (req, res) => {
+    res.render("client/forms/edit", {
+      client: db.getOne(req.params.id),
+    });
+  })
+
+  .put("/:id", (req, res) => {
+    console.log("xd");
+    db.update(req.params.id, req.body);
+    res.render("client/modified", {
+      id: req.params.id,
+      name: req.body.name,
+    });
   });
 
 module.exports = {
